@@ -1,4 +1,4 @@
-name: CI/CD CRUD Kesehatan
+name: CI/CD CRUD Kesehatan Docker
 
 on:
   push:
@@ -18,10 +18,20 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy ke EC2
+      - name: Deploy ke EC2 via Docker
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@32.197.129.189 << 'EOF'
           cd /var/www/tugas-crud-kesehatan
+
+          # 1. Tarik pembaruan kode
           git pull origin main
-          sudo systemctl restart nginx
+
+          # 2. Build Docker image baru
+          docker build -t app-crud-kesehatan .
+
+          # 3. Hapus container lama (jika ada) agar tidak bentrok
+          docker rm -f container-crud || true
+
+          # 4. Jalankan container baru di port 80
+          docker run -d -p 80:80 --name container-crud app-crud-kesehatan
           EOF

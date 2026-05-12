@@ -1,0 +1,10 @@
+# Mengabaikan file dan folder Git
+.git
+.gitignore
+.github
+
+# Mengabaikan file dokumentasi
+README.md
+
+# Langkah pengamanan ekstra untuk kunci AWS (wajib ada)
+*.pem
