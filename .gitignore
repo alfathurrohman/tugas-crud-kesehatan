@@ -1,0 +1,7 @@
+# Mengabaikan file kunci SSH AWS (SANGAT PENTING)
+*.pem
+kunci-server-kesehatan.pem
+
+# Mengabaikan file sistem OS (opsional tapi disarankan)
+.DS_Store
+Thumbs.db
